@@ -1,0 +1,131 @@
+﻿@import url('site.css');
+:root {
+    --black: #2C3E50 !important;
+    --white: white !important;
+    --green: #2ECC71 !important;
+    --grey: lightgrey !important;
+}
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+a {
+    color: #2ECC71;
+    text-decoration: none
+}
+
+a:hover {
+    color: #2ECC71;
+    text-decoration: none
+}
+
+.btn.btn-outline-success {
+    color: #2ECC71;
+    border-color: #2ECC71;
+}
+
+    .btn.btn-outline-success:hover,
+    .btn.btn-outline-success:focus {
+        color: #fff;
+        background-color: #2ECC71;
+        border-color: none !important;
+        box-shadow: none !important;
+    }
+
+
+.logo {
+    font-family: 'Comic Sans MS'
+}
+
+.logo-third {
+    color: var(--green)
+}
+
+.active {
+    color: var(--green) !important;
+    font-weight: bold
+}
+
+.dashboard-menu{
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+    border-color: #2ECC71 !important;
+}
+
+.menu-active {
+    color: #2ECC71 !important;
+}
+
+
+.pagination li {
+    color: var(--white) !important;
+    padding: 4px 8px;
+    border: 1px solid var(--green);
+    margin: 5px;
+    cursor: pointer;
+}
+
+    .pagination li.active {
+        color: var(--white);
+        background: var(--green)
+    }
+
+    .pagination li:hover {
+        color: var(--green) !important;
+        background: var(--white)
+    }
+
+
+.dropbtn {
+    /*background-color: #4CAF50;*/
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown container (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    text-decoration: none !important;
+}
+
+    .dropdown-content a {
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: black;
+    }
+/* Show the dropdown menu when the user clicks on the button */
+.show {
+    display: block;
+}

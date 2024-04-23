@@ -1,0 +1,84 @@
+﻿@model Business.DTOs.CreateBookingDTO
+
+@{
+    ViewData["Title"] = "Create Booking";
+    var vehicle = ViewBag.Vehicle as Business.DTOs.GetVehicleDTO;
+    var vehicleId = Context.Request.Query["vehicleId"];
+}
+<div class=" mx-auto col-md-8 mt-5">
+    <div class="text-center my-2">
+        <h4>Booking Information</h4>
+    </div>
+@*     <div>
+        @{
+            var success = TempData["Success"] as bool?;
+            var error = TempData["Error"] as bool?;
+            if (success.HasValue && success.Value)
+            {
+                <div class="alert alert-success" role="alert">
+                    Your booking created successfully!
+                </div>
+            }
+            else if (error.HasValue && error.Value)
+            {
+                <div class="alert alert-danger" role="alert">
+                    There is an error processing your payment
+                </div>
+            }
+        }
+    </div> *@
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicle Information</h5>
+                    <img src="@vehicle.Image" style="width: 100%; height: 50px; object-fit: contain" />
+                    <p>
+                        <strong>Name:</strong>@vehicle.Model @vehicle.Name<br />
+                        <strong>Year:</strong> @vehicle.Year<br />
+                        <strong>Color:</strong> @vehicle.Color<br />
+                        <strong>Price:</strong> &pound;@vehicle.Price/Day
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Price" value="@vehicle.Price" hidden/>
+                <input asp-for="VehicleId" value="@vehicleId" hidden />
+                <input asp-for="UserId" value="0" hidden />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="From" class="control-label"></label>
+                            <input type="date" asp-for="From" class="form-control" />
+                            <span asp-validation-for="From" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="To" class="control-label"></label>
+                            <input type="date" asp-for="To" class="form-control" />
+                            <span asp-validation-for="To" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Purpose" class="control-label"></label>
+                    <textarea asp-for="Purpose" class="form-control"></textarea>
+                    <span asp-validation-for="Purpose" class="text-danger"></span>
+                </div>
+                <div class="d-grid my-2">
+                    <input type="submit" value="Checkout" class="btn btn-outline-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

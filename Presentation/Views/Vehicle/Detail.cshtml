@@ -1,0 +1,32 @@
+﻿@model Business.DTOs.GetVehicleDTO
+@{
+    ViewData["Title"] = "Vehicle Details";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Image" class="img-fluid" alt="Vehicle Image" style="width: 100%; height: 250px; object-fit: contain">
+        </div>
+        <div class="col-md-6">
+            <h1>@Model.Model @Model.Name</h1>
+            <p><strong>Year:</strong> @Model.Year</p>
+            <p><strong>Color:</strong> @Model.Color</p>
+            <p><strong>Price:</strong> &pound;@Model.Price/Day</p>
+            <p><strong>Description:</strong> @Model.Description</p>
+            <a href="@Url.Action("index","Booking")?vehicleId=@Model.Id" class="btn btn-outline-success">Book it!</a>
+        </div>
+    </div>
+    <h4>Note</h4>
+    <ul>
+        <li>The price mentioned is the price for a day; it does not include fuel price and other expenses.</li>
+        <li>We offer a variety of vehicles to suit your needs, including sedans, SUVs, compact cars, and more.</li>
+        <li>Our rental vehicles are regularly maintained to ensure safety and reliability during your rental period.</li>
+        <li>We provide optional insurance coverage options, including collision damage waiver (CDW) and supplementary liability insurance (SLI), for added peace of mind.</li>
+        <li>Additional services such as GPS navigation systems, child seats, and roadside assistance are available upon request for an extra fee.</li>
+        <li>We have flexible rental periods, including daily, weekly, and monthly rentals, to accommodate your schedule.</li>
+        <li>For your convenience, we offer multiple pickup and drop-off locations, including airports, hotels, and city centers.</li>
+        <li>Please review our rental agreement carefully for all terms and conditions before proceeding with your reservation.</li>
+        <li>Should you have any questions or require assistance, our dedicated customer service team is available to assist you.</li>
+    </ul>
+</div>

@@ -1,0 +1,39 @@
+﻿@model Business.DTOs.UpdateUserDTO
+
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "_DashboardLayout";
+}
+
+
+<div class="row mx-auto">
+    <div class="col-md-12">
+        <h1>Settings</h1>
+        <form asp-action="Settings">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" value="@Model.Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" value="@Model.Email" disabled />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid my-2">
+                <input type="submit" value="Save Changes" class="btn btn-outline-success" />
+                <br />
+                <span class="text-muted">By clicking "Save Changes" it will log you out</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+

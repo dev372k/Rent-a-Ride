@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Business.DTOs.GetReviewDTO>
+
+@{
+    ViewData["Title"] = "Reviews";
+    Layout = "_DashboardLayout";
+}
+<link href="https://cdn.jsdelivr.net/gh/teddy95/starry@5/dist/starry.min.css" type="text/css" rel="stylesheet" />
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/gh/teddy95/starry@5/dist/starry.min.js" type="text/javascript" language="javascript"></script>
+    <script>
+        const starRatingId = 'star-rating'
+        var starRatingEl = document.getElementById(starRatingId);
+        var starRating = new Starry(starRatingEl, {
+            name: starRatingId,
+            onRate: function (rating) {
+                $("#rating").val(rating)
+            }
+        });
+    </script>
+}
+
+<div class="review">
+    <h1>Review</h1>
+    <form class="my-2" action="@Url.Action("Reviews", "Account")" method="post">
+        <div class="my-2">
+            <label>Add review</label>
+            <textarea class="form-control" name="comment">
+            </textarea>
+        </div>
+        <div class="my-2">
+            <div id="star-rating"></div>
+            <input name="rating" id="rating" hidden/>
+        </div>
+        <input type="submit" value="Add" class="btn btn-success" />
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)/5
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+

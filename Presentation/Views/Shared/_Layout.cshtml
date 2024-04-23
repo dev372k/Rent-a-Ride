@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@if (User.Identity!.IsAuthenticated)
+{
+    @inject StateHelper _stateHelper;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/Presentation.styles.css" asp-append-version="true" /> *@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white bg-transparent">
+            <div class="container-fluid">
+                <a class="navbar-brand logo" asp-area="" asp-controller="Home" asp-action="Index">@* <img class="logo" src="~/logo.png"/> *@Rent-a-<span class="logo-third">Ride</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @((ViewContext.RouteData.Values["Controller"].ToString() == "Vehicle" && (ViewContext.RouteData.Values["Action"].ToString() == "Vehicles" || ViewContext.RouteData.Values["Action"].ToString() == "Detail")) ? "active" : "")" asp-area="" asp-controller="Vehicle" asp-action="Vehicles">VEHICLES</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Action"].ToString() == "Reviews" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Reviews">REVIEWS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Action"].ToString() == "ContactUs" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="ContactUs">CONTACT US</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        @{
+                            if (User.Identity!.IsAuthenticated!)
+                            {
+                                <div class="dropdown">
+                                    <a onmouseover="toggleDropdown()" class="dropbtn">Hello, <b>@_stateHelper.GetUserData().Name</b></a>
+                                    <div id="myDropdown" class="dropdown-content" style="list-style: none; ">
+                                        <a href="@Url.Action("index", "Account")" class="text-black mx-1" type="submit">Dashboard</a>
+                                        <a href="@Url.Action("Logout", "Account")" class="text-danger mx-1" type="submit">Logout</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Account")" class="btn btn-outline-success mx-1" type="submit">Login</a>
+                                <a href="@Url.Action("Register", "Account")" class="btn btn-outline-success mx-1" type="submit">Register</a>
+                            }
+                        }
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="">
+        <main role="main" class="pb-3 my-2">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted fixed-bottom">
+        <div class="container-fluid text-center">
+            <hr />
+            &copy; 2024 - <span class="logo">Rent-a-Ride</span> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("myDropdown");
+            dropdown.classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
