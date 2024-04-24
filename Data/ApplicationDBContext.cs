@@ -16,7 +16,7 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasQueryFilter(_ => !_.IsDeleted);
+            //modelBuilder.Entity<User>().HasQueryFilter(_ => !_.IsDeleted);
             modelBuilder.Entity<Booking>().HasQueryFilter(_ => !_.IsDeleted);
 
             modelBuilder.Entity<User>().HasData(

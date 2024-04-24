@@ -42,3 +42,9 @@
     .sidebar .nav-link.active {
         color: var(--green);
     }
+
+
+.form-check-input:focus {
+    box-shadow: none !important;
+    border: var(--green) !important
+}

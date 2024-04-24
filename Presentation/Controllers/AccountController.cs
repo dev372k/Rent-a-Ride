@@ -126,6 +126,11 @@ namespace Presentation.Controllers
                 _notyf.Error("User not found");
                 return View();
             }
+            else if(user.IsDeleted)
+            {
+                _notyf.Error("User is locked. PLease contact Administrator");
+                return View();
+            }
             else if (!SecurityHelper.ValidateHash(model.Password, user.Password))
             {
                 _notyf.Error("User credentials are wrong");
@@ -165,6 +170,16 @@ namespace Presentation.Controllers
             var user = _stateHelper.GetUserData();
             var users = _userRepo.Get().Where(_ => _.Id != user.Id);
             return View(users.ToPagedList(pageNumber, CustomConstants.PageSize));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int userId, string status)
+        {
+            bool _status = false;
+            if (status == "on")
+                _status = true;
+            _userRepo.UpdateStatus(userId, _status);
+            return RedirectToAction("Users", "Account");
         }
     }
 }

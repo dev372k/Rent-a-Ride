@@ -76,10 +76,21 @@ namespace Business.Implementations
                 Role = _.Role,
                 City = _.City,
                 Country = _.Country,
-                Address = _.Address
+                Address = _.Address,
+                IsDeleted = _.IsDeleted
             });
 
             return users;
+        }
+
+        public void UpdateStatus(int userId, bool status)
+        {
+            var user = _context.Users.FirstOrDefault(_ => _.Id == userId);
+            if(user != null)
+            {
+                user.IsDeleted = status;
+                _context.SaveChanges();
+            }
         }
     }
 }

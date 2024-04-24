@@ -15,5 +15,6 @@ namespace Business.Implementations
         void Add(RegisterDTO dto);
         void Update(UpdateUserDTO dto);
         IQueryable<GetUserDTO> Get();
+        void UpdateStatus(int userId, bool status);
     }
 }
