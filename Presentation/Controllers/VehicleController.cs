@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("Vehicles")]
-        public IActionResult Vehicles(int vehicleType = 0, string location = "", decimal price = 0,int pageNumber = 1)
+        public IActionResult Vehicles(int vehicleType = 0, string location = "", decimal price = 0, int pageNumber = 1)
         {
             return View(_vehicleRepo.Get(vehicleType, location, price).ToPagedList(pageNumber, CustomConstants.PageSize));
         }
@@ -29,20 +29,24 @@ namespace Presentation.Controllers
         {
             return View(_vehicleRepo.Get(id));
         }
+        
+        [HttpGet("Vehicle/List"),Authorize]
+        public IActionResult List()
+        {
+            return View();
+        }
+
         [Authorize]
-        [HttpGet("Add")]
+        [HttpGet("Vehicle/Add")]
         public IActionResult Add()
         {
             return View();
-            //return View(_vehicleRepo.Get(query).ToPagedList(pageNumber, CustomConstants.PageSize));
         }
-        //[HttpGet("Vehicle/Add")]
-        [Authorize]
-        [HttpPost()]
+
+        [HttpPost, Authorize]
         public IActionResult Add(AddVehicleDTO model)
         {
-            var test = model;
-            return RedirectToAction("Vehicles", "Detail", new { id = 1});
+            return RedirectToAction("Detail", "Vehicle", new { id =  2});
             //return View(_vehicleRepo.Get(query).ToPagedList(pageNumber, CustomConstants.PageSize));
         }
     }
