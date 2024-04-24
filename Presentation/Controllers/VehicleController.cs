@@ -17,9 +17,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("Vehicles")]
-        public IActionResult Vehicles(string query = "", int pageNumber = 1)
+        public IActionResult Vehicles(int vehicleType = 0, string location = "", decimal price = 0,int pageNumber = 1)
         {
-            return View(_vehicleRepo.Get(query).ToPagedList(pageNumber, CustomConstants.PageSize));
+            return View(_vehicleRepo.Get(vehicleType, location, price).ToPagedList(pageNumber, CustomConstants.PageSize));
         }
 
         [HttpGet("Vehicle/Detail/{id}")]

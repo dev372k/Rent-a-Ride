@@ -11,8 +11,6 @@ using Business.Implementations;
 using Data.Helpers;
 using Newtonsoft.Json;
 using Presentation.Models;
-using Data.Entities;
-using Humanizer;
 
 namespace Presentation.Controllers
 {

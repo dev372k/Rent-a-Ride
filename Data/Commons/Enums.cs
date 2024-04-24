@@ -20,7 +20,7 @@ namespace Data.Commons
     }
     public enum enVehicleType
     {
-        Sedan,
+        Sedan = 1,
         SUV,
         Truck,
         Motorcycle,
@@ -42,4 +42,13 @@ namespace Data.Commons
         Complete
     }
 
+    public enum enRentReason
+    {
+        Vacation,
+        BusinessTrip,
+        PersonalUse,
+        ReplacementVehicle,
+        SpecialOccasion,
+        Other
+    }
 }
