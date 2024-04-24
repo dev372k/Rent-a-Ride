@@ -9,8 +9,8 @@ namespace Business.Interfaces
 {
     public interface IReviewRepo
     {
-        void Add(int userId, AddReviewDTO dto);
-        List<GetReviewDTO> Get(int userId);
+        void Add(int BookingId, AddReviewDTO dto);
+        List<GetReviewDTO> Get(int bookingId);
         List<GetReviewDTO> Get();
     }
 }

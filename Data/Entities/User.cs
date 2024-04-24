@@ -17,7 +17,6 @@ namespace Data.Entities
         public string City { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public ICollection<Booking> Bookings { get; set; }
-        public ICollection<Review> Reviews { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
     }
 }

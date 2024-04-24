@@ -1,13 +1,7 @@
 ﻿using Business.DTOs;
 using Business.Interfaces;
 using Data;
-using Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Implementations
 {
@@ -19,22 +13,22 @@ namespace Business.Implementations
         {
             _context = context;
         }
-        public void Add(int userId, AddReviewDTO dto)
+        public void Add(int bookingId, AddReviewDTO dto)
         {
             _context.Reviews.Add(new Data.Entities.Review
             {
-                UserId = userId,
+                BookingId = bookingId,
                 Comment = dto.Comment,
                 Rating = dto.Rating,
             });
             _context.SaveChanges();
         }
 
-        public List<GetReviewDTO> Get(int userId)
+        public List<GetReviewDTO> Get(int bookingId)
         {
-            return _context.Reviews.Include(_ => _.User).Where(_ => _.UserId == userId).Select(_ => new GetReviewDTO
+            return _context.Reviews.Include(_ => _.Booking).Where(_ => _.BookingId == bookingId).Select(_ => new GetReviewDTO
             {     
-                User = _.User,
+                User = _.Booking.User,
                 Comment = _.Comment,
                 Rating = _.Rating,
             }).ToList();
@@ -42,9 +36,9 @@ namespace Business.Implementations
 
         public List<GetReviewDTO> Get()
         {
-            return _context.Reviews.Include(_ => _.User).Select(_ => new GetReviewDTO
+            return _context.Reviews.Include(_ => _.Booking).Select(_ => new GetReviewDTO
             {
-                User = _.User,
+                User = _.Booking.User,
                 Comment = _.Comment,
                 Rating = _.Rating,
             }).ToList();

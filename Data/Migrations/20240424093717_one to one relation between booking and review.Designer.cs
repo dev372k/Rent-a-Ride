@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240413001257_Add column in booking")]
-    partial class Addcolumninbooking
+    [Migration("20240424093717_one to one relation between booking and review")]
+    partial class onetoonerelationbetweenbookingandreview
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,9 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,12 +95,10 @@ namespace Data.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BookingId")
+                        .IsUnique();
 
                     b.ToTable("Reviews");
                 });
@@ -143,6 +144,18 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -172,7 +185,10 @@ namespace Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2024, 4, 13, 5, 12, 56, 482, DateTimeKind.Local).AddTicks(2363),
+                            Address = "",
+                            City = "",
+                            Country = "",
+                            CreatedOn = new DateTime(2024, 4, 24, 14, 37, 16, 816, DateTimeKind.Local).AddTicks(4001),
                             Email = "sa@mailinator.com",
                             IsDeleted = false,
                             Name = "Owner",
@@ -255,13 +271,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Review", b =>
                 {
-                    b.HasOne("Data.Entities.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Data.Entities.Booking", "Booking")
+                        .WithOne("Review")
+                        .HasForeignKey("Data.Entities.Review", "BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("Data.Entities.Transaction", b =>
@@ -275,11 +291,15 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.Booking", b =>
+                {
+                    b.Navigation("Review")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("Transactions");
                 });

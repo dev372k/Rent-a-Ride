@@ -41,7 +41,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Country" class="control-label"></label>
-                        <input type="text" asp-for="Country" class="form-control" value="@Model.Country" />
+                        <select asp-for="Country" class="form-control">
+
+                        </select>
+                        @* <input type="text" asp-for="Country" class="form-control" value="@Model.Country" /> *@
                         <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
                 </div>
@@ -56,3 +59,52 @@
 </div>
 
 
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            // Check if countries are already stored in localStorage
+            let countries = localStorage.getItem('countries');
+            if (countries) {
+                // If countries are stored, parse them from localStorage
+                countries = JSON.parse(countries);
+                // Bind countries to dropdown
+                bindCountries(countries);
+            } else {
+                // If countries are not stored, fetch them from API
+                fetch("https://restcountries.com/v3.1/all")
+                    .then(response => response.json())
+                    .then(result => {
+                        // Extract country names and sort alphabetically
+                        countries = result.map(country => country.name.common).sort();
+                        // Store countries in localStorage
+                        localStorage.setItem('countries', JSON.stringify(countries));
+                        // Bind countries to dropdown
+                        bindCountries(countries);
+                    })
+                    .catch(error => console.error('Error fetching countries:', error));
+            }
+        })
+
+
+        // Function to bind countries to dropdown
+        function bindCountries(countries) {
+            const dropdown = document.getElementById('Country');
+            // Clear existing options
+            dropdown.innerHTML = '';
+            // Add default option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.text = 'Select Country';
+            dropdown.appendChild(defaultOption);
+            // Add countries to dropdown
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.text = country;
+                dropdown.appendChild(option);
+            });
+        }
+
+
+    </script>
+}

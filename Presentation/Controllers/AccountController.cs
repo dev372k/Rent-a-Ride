@@ -73,8 +73,8 @@ namespace Presentation.Controllers
             var user = _stateHelper.GetUserData();
             if(user.Role == enRole.Admin)
                 reviews = _reviewRepo.Get();
-            else
-                reviews = _reviewRepo.Get(user.Id);
+            //else
+            //    reviews = _reviewRepo.Get(user.Id);
 
             return View(reviews);
         }
@@ -82,8 +82,8 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult Reviews(AddReviewDTO dto)
         {
-            _reviewRepo.Add(_stateHelper.GetUserData().Id, dto);
-            return RedirectToAction("Reviews", "Account");
+            _reviewRepo.Add(dto.BookingId, dto);
+            return RedirectToAction("Booking", "Account");
         }
 
         [HttpGet]

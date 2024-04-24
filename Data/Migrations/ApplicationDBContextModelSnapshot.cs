@@ -76,6 +76,9 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -89,12 +92,10 @@ namespace Data.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BookingId")
+                        .IsUnique();
 
                     b.ToTable("Reviews");
                 });
@@ -184,7 +185,7 @@ namespace Data.Migrations
                             Address = "",
                             City = "",
                             Country = "",
-                            CreatedOn = new DateTime(2024, 4, 24, 10, 38, 0, 504, DateTimeKind.Local).AddTicks(9641),
+                            CreatedOn = new DateTime(2024, 4, 24, 14, 37, 16, 816, DateTimeKind.Local).AddTicks(4001),
                             Email = "sa@mailinator.com",
                             IsDeleted = false,
                             Name = "Owner",
@@ -267,13 +268,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Review", b =>
                 {
-                    b.HasOne("Data.Entities.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Data.Entities.Booking", "Booking")
+                        .WithOne("Review")
+                        .HasForeignKey("Data.Entities.Review", "BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("Data.Entities.Transaction", b =>
@@ -287,11 +288,15 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.Booking", b =>
+                {
+                    b.Navigation("Review")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("Transactions");
                 });

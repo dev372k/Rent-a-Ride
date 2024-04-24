@@ -51,10 +51,10 @@ namespace Business.Implementations
 
         public IQueryable<GetBookingDTO> Get(int userId)
         {
-            var bookings = _context.Bookings.Include(_ => _.User).Include(_ => _.Vehicle).Where(_ => _.UserId == userId).Select(_ => new GetBookingDTO
+            var bookings = _context.Bookings.Include(_ => _.User).Include(_ => _.Vehicle).Where(_ => (userId !=0 ? _.UserId == userId : true)).Select(_ => new GetBookingDTO
             {
                 Id = _.Id,
-                From =_.From,
+                From = _.From,
                 To = _.To,
                 Purpose = _.Purpose,
                 User = new GetUserDTO
@@ -73,6 +73,7 @@ namespace Business.Implementations
                     Year = _.Vehicle.Year,
                     Color = _.Vehicle.Color,
                 },
+                IsReview = _context.Reviews.Any(_ => _.BookingId == _.Id) ? false : true,
                 Status = ((enPaymentStatus)_.Status).ToString()
             });
 

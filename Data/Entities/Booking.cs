@@ -23,5 +23,8 @@ namespace Data.Entities
         [ForeignKey("Vehicle")]
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
+        //[ForeignKey("Review")]
+        //public int ReviewId { get; set; }
+        public Review Review { get; set; }
     }
 }

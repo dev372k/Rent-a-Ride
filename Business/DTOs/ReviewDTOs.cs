@@ -9,6 +9,7 @@ namespace Business.DTOs
 {
     public class AddReviewDTO
     {
+        public int BookingId { get; set; }
         public string Comment { get; set; }
         public int Rating { get; set; }
     }

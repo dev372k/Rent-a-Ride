@@ -44,7 +44,13 @@ namespace Presentation.Controllers
         [HttpGet("Account/Booking")]
         public IActionResult Booking(string query = "", int pageNumber = 1)
         {
-            return View(_bookingRepo.Get(_stateHelper.GetUserData().Id).ToPagedList(pageNumber, CustomConstants.PageSize));
+            IQueryable<GetBookingDTO> bookings = null;
+            var user = _stateHelper.GetUserData();
+            if (user.Role == enRole.Admin)
+                bookings = _bookingRepo.Get(0);
+            else
+                bookings = _bookingRepo.Get(_stateHelper.GetUserData().Id);
+            return View(bookings.ToPagedList(pageNumber, CustomConstants.PageSize));
         }
 
         [Authorize]

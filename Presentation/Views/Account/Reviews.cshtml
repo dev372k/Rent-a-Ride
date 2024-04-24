@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Reviews";
     Layout = "_DashboardLayout";
+    int.TryParse(Context.Request.Query["BookingId"], out int BookingId);
 }
 <link href="https://cdn.jsdelivr.net/gh/teddy95/starry@5/dist/starry.min.css" type="text/css" rel="stylesheet" />
 @section scripts {
@@ -22,6 +23,7 @@
 <div class="review">
     <h1>Review</h1>
     <form class="my-2" action="@Url.Action("Reviews", "Account")" method="post">
+        <input name="BookingId" value="@BookingId" hidden/>
         <div class="my-2">
             <label>Add review</label>
             <textarea class="form-control" name="comment">
@@ -34,7 +36,7 @@
         <input type="submit" value="Add" class="btn btn-success" />
     </form>
 </div>
-<table class="table">
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -63,6 +65,6 @@
             }
         }
     </tbody>
-</table>
+</table> *@
 
 

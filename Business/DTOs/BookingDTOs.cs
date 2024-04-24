@@ -25,6 +25,7 @@ namespace Business.DTOs
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public string Purpose { get; set; } = string.Empty;
+        public bool IsReview { get; set; } 
         public string Status { get; set; }
         public GetUserDTO User { get; set; }
         public GetVehicleDTO Vehicle { get; set; }
