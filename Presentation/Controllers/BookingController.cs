@@ -74,9 +74,13 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult Details(int Id)
         {
-            var vehicle = _bookingRepo.Get(_stateHelper.GetUserData().Id).FirstOrDefault(_ => _.Id == Id);
-            //var vehicle = _bookingRepo.Get(Id).FirstOrDefault(_ => _.Id == Id);
-            return View(vehicle);
+            GetBookingDTO bookings = new();
+            var user = _stateHelper.GetUserData();
+            if (user.Role == enRole.Admin)
+                bookings = _bookingRepo.Get(0).FirstOrDefault(_ => _.Id == Id);
+            else
+                bookings = _bookingRepo.Get(_stateHelper.GetUserData().Id).FirstOrDefault(_ => _.Id == Id);
+            return View(bookings);
         }
 
 

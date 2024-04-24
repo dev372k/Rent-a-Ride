@@ -82,8 +82,8 @@
 @section scripts {
     <script>
         $(document).ready(() => {
-            debugger;
-            $("#vehicleType").val(@vehicleType)
+            if (@vehicleType)
+                $("#vehicleType").val(@vehicleType)
             $('#priceRange').text($("#price").val())
         })
     </script>

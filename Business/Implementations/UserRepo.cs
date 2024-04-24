@@ -2,6 +2,7 @@
 using Data;
 using Data.Entities;
 using Data.Helpers;
+using System.Reflection.Metadata;
 
 namespace Business.Implementations
 {
@@ -62,7 +63,23 @@ namespace Business.Implementations
                 _context.Users.Update(user);
                 _context.SaveChanges();
             }
+        }
 
+        public IQueryable<GetUserDTO> Get()
+        {
+            var users = _context.Users.Select(_ => new GetUserDTO
+            {
+                Id = _.Id,
+                Email = _.Email,
+                Name = _.Name,
+                Password = _.Password,
+                Role = _.Role,
+                City = _.City,
+                Country = _.Country,
+                Address = _.Address
+            });
+
+            return users;
         }
     }
 }

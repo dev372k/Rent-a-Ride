@@ -14,5 +14,6 @@ namespace Business.Implementations
         GetUserDTO Get(string email);
         void Add(RegisterDTO dto);
         void Update(UpdateUserDTO dto);
+        IQueryable<GetUserDTO> Get();
     }
 }

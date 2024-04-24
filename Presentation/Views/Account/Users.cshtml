@@ -1,0 +1,55 @@
+﻿@model X.PagedList.IPagedList<Business.DTOs.GetUserDTO>
+@using Data.Commons
+@using X.PagedList.Mvc.Core
+@{
+    ViewData["Title"] = "Users";
+    Layout = "_DashboardLayout";
+}
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @((enRole)@item.Role)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="">
+    @if (Model.Count() > 0)
+    {
+        <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
+        <span>@Html.PagedListPager(Model, page => Url.Action("Booking", new { pageNumber = page }))</span>
+    }
+</div>

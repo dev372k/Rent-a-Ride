@@ -11,6 +11,7 @@ using Business.Implementations;
 using Data.Helpers;
 using Newtonsoft.Json;
 using Presentation.Models;
+using X.PagedList;
 
 namespace Presentation.Controllers
 {
@@ -71,7 +72,7 @@ namespace Presentation.Controllers
         {
             var reviews = new List<GetReviewDTO>();
             var user = _stateHelper.GetUserData();
-            if(user.Role == enRole.Admin)
+            if (user.Role == enRole.Admin)
                 reviews = _reviewRepo.Get();
             //else
             //    reviews = _reviewRepo.Get(user.Id);
@@ -143,7 +144,9 @@ namespace Presentation.Controllers
                 var principal = new ClaimsPrincipal(identity);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                if (!String.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                if (user.Role == enRole.Admin)
+                    return RedirectToAction("Index", "Account");
+                else if (!String.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     return Redirect(model.ReturnUrl);
                 else
                     return RedirectToAction("Index", "Home");
@@ -155,6 +158,13 @@ namespace Presentation.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        public IActionResult Users(int pageNumber = 1)
+        {
+            var user = _stateHelper.GetUserData();
+            var users = _userRepo.Get().Where(_ => _.Id != user.Id);
+            return View(users.ToPagedList(pageNumber, CustomConstants.PageSize));
         }
     }
 }
