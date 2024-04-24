@@ -24,13 +24,13 @@ namespace Business.DTOs
 
     public class AddVehicleDTO
     {
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
+        public string Name { get; set; } 
+        public string Description { get; set; } 
+        public string Image { get; set; }
         public enVehicleType Type { get; set; }
-        public string Model { get; set; } = string.Empty;
-        public string Year { get; set; } = string.Empty;
-        public string Color { get; set; } = string.Empty;
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
         public string Location { get; set; } = string.Empty;
         public decimal Price { get; set; }
     }

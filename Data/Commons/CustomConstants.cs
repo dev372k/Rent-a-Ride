@@ -9,5 +9,6 @@ namespace Data.Commons
     public static class CustomConstants
     {
         public const int PageSize = 10;
+        public const string BaseUrl = "BaseUrl";
     }
 }

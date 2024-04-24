@@ -36,14 +36,16 @@ namespace Presentation.Controllers
             return View();
         }
 
-        [Authorize]
-        [HttpGet("Vehicle/Add")]
+        //[Authorize]
+        //[HttpGet("Vehicle/Add")]
+        [HttpGet]
         public IActionResult Add()
-        {
+        {   
             return View();
         }
 
-        [HttpPost, Authorize]
+        //[HttpPost("Vehicle/Add")]
+        [HttpPost]
         public IActionResult Add(AddVehicleDTO model)
         {
             return RedirectToAction("Detail", "Vehicle", new { id =  2});
