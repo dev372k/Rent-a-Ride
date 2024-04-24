@@ -41,7 +41,10 @@ namespace Business.Implementations
                 Email = _.Email,
                 Name = _.Name,
                 Password = _.Password,
-                Role = _.Role
+                Role = _.Role,
+                City = _.City,
+                Country = _.Country,
+                Address = _.Address
             }).FirstOrDefault();
             return user;
         }

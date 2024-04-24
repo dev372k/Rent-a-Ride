@@ -12,6 +12,7 @@ using Data.Helpers;
 using Newtonsoft.Json;
 using Presentation.Models;
 using Data.Entities;
+using Humanizer;
 
 namespace Presentation.Controllers
 {
@@ -45,6 +46,9 @@ namespace Presentation.Controllers
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country,
                 //Password = user.Password
             });
         }
@@ -58,6 +62,9 @@ namespace Presentation.Controllers
                 Id = user.Id,
                 Name = dto.Name,
                 Email = user.Email,
+                Address = dto.Address,
+                City = dto.City,
+                Country = dto.Country,
             });
             return RedirectToAction("Logout", "Account");
         }
@@ -127,7 +134,6 @@ namespace Presentation.Controllers
             }
             else
             {
-                var usr = User;
                 var identity = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, model.Email),

@@ -28,18 +28,22 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Address" class="control-label"></label>
-                    <input type="text" asp-for="Address" class="form-control" />
+                    <input type="text" asp-for="Address" class="form-control" value="@Model.Address" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="City" class="control-label"></label>
-                    <input type="text" asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input type="text" asp-for="City" class="form-control" value="@Model.City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Country" class="control-label"></label>
-                    <input type="text" asp-for="Country" class="form-control" />
-                    <span asp-validation-for="Country" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Country" class="control-label"></label>
+                        <input type="text" asp-for="Country" class="form-control" value="@Model.Country" />
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
             <div class="d-grid my-2">
