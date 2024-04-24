@@ -30,6 +30,9 @@ namespace Business.Implementations
             {
                 Name = dto.Name,
                 Email = dto.Email,
+                Address = dto.Address,
+                City = dto.City,
+                Country = dto.Country,
                 Password = SecurityHelper.GenerateHash(dto.Password)
             };
             _context.Users.Add(user);
@@ -40,11 +43,11 @@ namespace Business.Implementations
         {
             GetUserDTO? user = _context.Users.Where(_ => _.Email.ToLower().Equals(email.ToLower())).Select(_ => new GetUserDTO
             {
-               Id = _.Id,
-               Email = _.Email,
-               Name = _.Name,
-               Password = _.Password,
-               Role = _.Role
+                Id = _.Id,
+                Email = _.Email,
+                Name = _.Name,
+                Password = _.Password,
+                Role = _.Role
             }).FirstOrDefault();
             return user;
         }
@@ -55,6 +58,10 @@ namespace Business.Implementations
             if (user != null)
             {
                 user.Name = dto.Name;
+                user.Address = dto.Address;
+                user.City = dto.City;
+                user.Country = dto.Country;
+
                 _context.Users.Update(user);
                 _context.SaveChanges();
             }
