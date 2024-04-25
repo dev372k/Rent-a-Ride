@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Business.DTOs.AddVehicleDTO>
+﻿@model X.PagedList.IPagedList<Business.DTOs.CreateVehicleDTO>
 @using Data.Commons
 @using X.PagedList.Mvc.Core
 @{
@@ -56,7 +56,7 @@
                             @Html.DisplayFor(modelItem => item.Type)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Model)
+                            @Html.DisplayFor(modelItem => item.VehicleModel)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Year)

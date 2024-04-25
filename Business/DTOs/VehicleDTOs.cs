@@ -20,6 +20,8 @@ namespace Business.DTOs
         public string Color { get; set; } = string.Empty;
         public string Location { get; set; } = string.Empty;
         public decimal Price { get; set; }
+        public DateTime NotAvailableFrom { get; set; }
+        public DateTime NotAvailableTo { get; set; }
     }
 
     public class CreateVehicleDTO

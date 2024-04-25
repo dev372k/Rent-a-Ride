@@ -11,23 +11,23 @@
     <div class="text-center my-2">
         <h4>Booking Information</h4>
     </div>
-@*     <div>
-        @{
-            var success = TempData["Success"] as bool?;
-            var error = TempData["Error"] as bool?;
-            if (success.HasValue && success.Value)
-            {
-                <div class="alert alert-success" role="alert">
-                    Your booking created successfully!
-                </div>
-            }
-            else if (error.HasValue && error.Value)
-            {
-                <div class="alert alert-danger" role="alert">
-                    There is an error processing your payment
-                </div>
-            }
-        }
+    @*     <div>
+    @{
+    var success = TempData["Success"] as bool?;
+    var error = TempData["Error"] as bool?;
+    if (success.HasValue && success.Value)
+    {
+    <div class="alert alert-success" role="alert">
+    Your booking created successfully!
+    </div>
+    }
+    else if (error.HasValue && error.Value)
+    {
+    <div class="alert alert-danger" role="alert">
+    There is an error processing your payment
+    </div>
+    }
+    }
     </div> *@
     <div class="row">
         <div class="col-md-4">
@@ -36,10 +36,18 @@
                     <h5 class="card-title">Vehicle Information</h5>
                     <img src="@vehicle.Image" style="width: 100%; height: 50px; object-fit: contain" />
                     <p>
-                        <strong>Name:</strong>@vehicle.Model @vehicle.Name<br />
+                        <strong>Name:</strong> @vehicle.Model @vehicle.Name<br />
                         <strong>Year:</strong> @vehicle.Year<br />
                         <strong>Color:</strong> @vehicle.Color<br />
                         <strong>Price:</strong> &pound;@vehicle.Price/Day
+                        @* <br />
+                        <strong>Not available from:</strong>
+                        <br />
+                        @vehicle.NotAvailableFrom
+                        <br />
+                        <strong>Not available to:</strong>
+                        <br />
+                        @vehicle.NotAvailableTo *@
                     </p>
                 </div>
             </div>
@@ -47,14 +55,14 @@
         <div class="col-md-8">
             <form asp-action="Index">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input asp-for="Price" value="@vehicle.Price" hidden/>
+                <input asp-for="Price" value="@vehicle.Price" hidden />
                 <input asp-for="VehicleId" value="@vehicleId" hidden />
                 <input asp-for="UserId" value="0" hidden />
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="From" class="control-label"></label>
-                            <input type="datetime-local" asp-for="From" class="form-control" />
+                            <input type="datetime-local" asp-for="From" class="form-control" onchange="disableDate()"/>
                             <span asp-validation-for="From" class="text-danger"></span>
                         </div>
                     </div>
@@ -93,8 +101,21 @@
     }
 
     <script>
-        var now = new Date().toISOString().slice(0, 16);
-        document.getElementById("From").min = now;
-        document.getElementById("To").min = now;
+        // Wait for the DOM to load
+        document.addEventListener("DOMContentLoaded", function () {
+            var notAvailableFrom = new Date("@vehicle.NotAvailableFrom").toISOString().slice(0, 16);
+            var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
+            var now = new Date().toISOString().slice(0, 16);
+
+            document.getElementById("From").min = notAvailableTo > now ? notAvailableTo : now;
+            document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
+        });
+
+        const disableDate = () => {
+            debugger
+            var now = new Date().toISOString().slice(0, 16);
+            var notAvailableTo = new Date($("#From").val()).toISOString().slice(0, 16);
+            document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
+        }
     </script>
 }
