@@ -10,7 +10,7 @@ namespace Business.Interfaces
 {
     public interface IFileService
     {
-        Task<FileResponseDTO> UploadFile(List<IFormFile> ListFiles);
+        Task<FileResponseDTO> UploadFile(IFormFile file);
         string FileURL(string filename);
         bool DeleteFile(string filename);
     }

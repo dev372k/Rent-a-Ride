@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Business.DTOs.CreateVehicleDTO>
+﻿@model X.PagedList.IPagedList<Business.DTOs.GetVehicleDTO>
 @using Data.Commons
 @using X.PagedList.Mvc.Core
 @{
@@ -46,7 +46,7 @@
                 {
                     <tr>
                         <td>
-
+                            <img src="@item.Image" alt="Image" width="80" height="50" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
@@ -56,7 +56,7 @@
                             @Html.DisplayFor(modelItem => item.Type)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.VehicleModel)
+                            @Html.DisplayFor(modelItem => item.Model)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Year)
@@ -68,8 +68,9 @@
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
-                            <a href="@Url.Action("Details", "Booking")?Id">Details</a> |
-                            <a href="@Url.Action("Delete", "Booking")?Id">Delete</a>
+
+                            <a href="@Url.Action("Details", "Vehicle")/@item.Id">Details</a>|
+                            <a href="@Url.Action("Delete", "Vehicle")/@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
