@@ -45,7 +45,8 @@ namespace Business.Implementations
                 Role = _.Role,
                 City = _.City,
                 Country = _.Country,
-                Address = _.Address
+                Address = _.Address,
+                IsDeleted = _.IsDeleted
             }).FirstOrDefault();
             return user;
         }

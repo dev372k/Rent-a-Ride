@@ -51,11 +51,11 @@
                             @{
                                 if (item.IsDeleted)
                                 {
-                                    <input name="status" class="form-check-input" type="checkbox" role="switch" checked onchange="$('#form').submit()">
+                                    <input name="status" class="form-check-input" type="checkbox" role="switch" onchange="$('#form').submit()">
                                 }
                                 else
                                 {
-                                    <input name="status" class="form-check-input" type="checkbox" role="switch" onchange="$('#form').submit()">
+                                    <input name="status" class="form-check-input" type="checkbox" role="switch" checked onchange="$('#form').submit()">
                                 }
                             }
                         </form>
