@@ -9,7 +9,7 @@
 <h1>Vehicles</h1>
 
 <p>
-    <a href="@Url.Action("Add","Vehicle")" class="btn btn-outline-success">Add Vehicle</a>
+    <a href="@Url.Action("Create","Vehicle")" class="btn btn-outline-success">Add Vehicle</a>
 </p>
 <table class="table">
     <thead>
@@ -46,7 +46,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Image)
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)

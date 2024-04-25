@@ -36,20 +36,16 @@ namespace Presentation.Controllers
             return View();
         }
 
-        //[Authorize]
-        //[HttpGet("Vehicle/Add")]
         [HttpGet]
-        public IActionResult Add()
-        {   
+        public IActionResult Create()
+        {
             return View();
         }
 
-        //[HttpPost("Vehicle/Add")]
         [HttpPost]
-        public IActionResult Add(AddVehicleDTO model)
+        public IActionResult Create(CreateVehicleDTO model)
         {
-            return RedirectToAction("Detail", "Vehicle", new { id =  2});
-            //return View(_vehicleRepo.Get(query).ToPagedList(pageNumber, CustomConstants.PageSize));
+            return View();
         }
     }
 }
