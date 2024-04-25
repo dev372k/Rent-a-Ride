@@ -1,84 +1,93 @@
-﻿@model IEnumerable<Business.DTOs.AddVehicleDTO>
-
+﻿@model X.PagedList.IPagedList<Business.DTOs.AddVehicleDTO>
+@using Data.Commons
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "List";
     Layout = "_DashboardLayout";
 }
 
-<h1>List</h1>
+<h1>Vehicles</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a href="@Url.Action("Add","Vehicle")" class="btn btn-outline-success">Add Vehicle</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                Model
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Model)
+                Year
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                Color
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Color)
+                Price
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @{
+            if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Image)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details", "Booking")?Id">Details</a> |
+                            <a href="@Url.Action("Delete", "Booking")?Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" class="text-center">No Vehicle</td>
+                </tr>
+            }
+        
+        }
     </tbody>
 </table>
+<div class="">
+    @if (Model != null && Model.Count() > 0)
+    {
+        <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
+        <span>@Html.PagedListPager(Model, page => Url.Action("List", new { pageNumber = page }))</span>
+    }
+</div>

@@ -49,7 +49,15 @@
                             @item.To.ToString("dd MMM, yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @if (item.Status == enPaymentStatus.Paid.ToString())
+                            {
+                                <span class="badge bg-success">@item.Status</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@item.Status</span>
+                                
+                            }
                         </td>
                         <td>
                             @if (item.IsReview)

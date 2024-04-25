@@ -1,5 +1,5 @@
 ﻿@using Data.Commons
-@using System.ComponentModel.DataAnnotations
+@* @using System.ComponentModel.DataAnnotations *@
 @model Business.DTOs.AddVehicleDTO
 
 @{
@@ -10,8 +10,8 @@
 <h1>Vehicle</h1>
 <div class="row">
     <div class="col-md-12">
-        <form method="post" asp-action="Add">
-            @Html.AntiForgeryToken()
+        <form asp-action="Add">
+            @* @Html.AntiForgeryToken() *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-md-6">
