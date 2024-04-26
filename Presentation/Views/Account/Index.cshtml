@@ -1,4 +1,5 @@
-﻿@model DashboardModel
+﻿@using Data.Helpers
+@model DashboardModel
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
@@ -114,7 +115,7 @@
                 </svg>
             </div>
             <div class="card-content">
-                <div class="card-value">Total Revenue <strong>(@Model.TotalRevenue)</strong></div>
+                <div class="card-value">Total Revenue <strong>(&pound;@MiscHelper.FormatNumber(Model.TotalRevenue))</strong></div>
             </div>
         </div>
     </div>
