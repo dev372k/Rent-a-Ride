@@ -48,19 +48,19 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider(
-//            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images")),
-//    RequestPath = "/wwwroot/Images"
-//});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images")),
+    RequestPath = "/wwwroot/Images"
+});
 
-//app.UseDirectoryBrowser(new DirectoryBrowserOptions
-//{
-//    FileProvider = new PhysicalFileProvider(
-//                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images")),
-//    RequestPath = "/wwwroot/Images"
-//});
+app.UseDirectoryBrowser(new DirectoryBrowserOptions
+{
+    FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images")),
+    RequestPath = "/wwwroot/Images"
+});
 
 app.UseAuthentication();
 app.UseRouting();

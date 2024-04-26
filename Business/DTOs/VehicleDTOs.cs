@@ -1,5 +1,6 @@
 ﻿using Data.Commons;
 using Data.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,10 @@ namespace Business.DTOs
     {
         public int Id { get; set; } 
         public string Name { get; set; }
+        public IFormFile FileImage { get; set; }
+        //public HttpPostedFileBase FileImage { get; set; }
         public string Description { get; set; }
-        public string Type { get; set; }
+        public int Type { get; set; }
         public string VehicleModel { get; set; }
         public string Year { get; set; }
         public string Color { get; set; }

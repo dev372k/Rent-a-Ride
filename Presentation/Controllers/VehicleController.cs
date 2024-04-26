@@ -1,8 +1,10 @@
 ﻿using Business.DTOs;
+using Business.Implementations;
 using Business.Interfaces;
 using Data.Commons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Models;
 using X.PagedList;
 
 namespace Presentation.Controllers
@@ -31,21 +33,39 @@ namespace Presentation.Controllers
         }
         
         [HttpGet("Vehicle/List"),Authorize]
-        public IActionResult List()
+        public IActionResult List(int vehicleType = 0, string location = "", decimal price = 0, int pageNumber = 1)
         {
-            return View();
+            return View(_vehicleRepo.Get(vehicleType, location, price).ToPagedList(pageNumber, CustomConstants.PageSize));
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult Create(CreateVehicleDTO model)
         {
+            _vehicleRepo.Add(model);
             return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Delete(int Id)
+        {
+            _vehicleRepo.Delete(Id);
+            return RedirectToAction("List", "Vehicle");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Details(int Id)
+        {
+            GetVehicleDTO vehicle = new();
+            vehicle = _vehicleRepo.Get(Id);
+            return View(vehicle);
         }
     }
 }

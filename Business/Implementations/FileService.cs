@@ -22,40 +22,35 @@ namespace Business.Implementations
             this.configuration = configuration;
         }
 
-        public async Task<FileResponseDTO> UploadFile(List<IFormFile> ListFiles)
+        public async Task<FileResponseDTO> UploadFile(IFormFile file)
         {
 
             FileResponseDTO fileResponse = new FileResponseDTO();
 
-            foreach (var file in ListFiles)
+            if (file.FileName.Length > 100)
             {
-                if (file.FileName.Length > 100)
-                {
-                    throw new Exception("Length Exceeds");
-                }
-
-                if (file.Length > 52428800)
-                {
-                    throw new Exception("File Size Exceed");
-                }
-
-                string[] arrFile = file.FileName.Split(".");
-
-
-                // Generate guid
-                Guid obj = Guid.NewGuid();
-                string guid = obj.ToString();
-
-
-                // Append guid in filename before extension
-                string fileName = arrFile[0] + "_" + guid + "." + arrFile[1];
-
-                // Copy blob service rsp in project model
-                FileItemResponse fileItemResponse = new FileItemResponse();
-                fileItemResponse.FileName = fileName;
-                fileItemResponse.FilePath = FileURL(fileName);
-                fileResponse.ListFileResponse.Add(fileItemResponse);
+                throw new Exception("Length Exceeds");
             }
+            if (file.Length > 52428800)
+            {
+                throw new Exception("File Size Exceed");
+            }
+
+            string[] arrFile = file.FileName.Split(".");
+
+            // Generate guid
+            Guid obj = Guid.NewGuid();
+            string guid = obj.ToString();
+            // Append guid in filename before extension
+            string fileName = arrFile[0] + "_" + guid + "." + arrFile[1];
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+            fileResponse.FileName = fileName;
+            fileResponse.FilePath = FileURL(fileName);
 
             return fileResponse;
         }
