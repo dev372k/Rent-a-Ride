@@ -106,7 +106,7 @@
             var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
             var now = new Date().toISOString().slice(0, 16);
 
-            document.getElementById("From").min = notAvailableTo > now ? notAvailableTo : now;
+            document.getElementById("From").min = notAvailableFrom > now ? notAvailableFrom : now;
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
         });
 
