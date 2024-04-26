@@ -32,7 +32,7 @@ namespace Business.DTOs
         public IFormFile FileImage { get; set; }
         //public HttpPostedFileBase FileImage { get; set; }
         public string Description { get; set; }
-        public int Type { get; set; }
+        public enVehicleType Type { get; set; }
         public string VehicleModel { get; set; }
         public string Year { get; set; }
         public string Color { get; set; }

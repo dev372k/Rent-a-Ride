@@ -48,7 +48,7 @@ namespace Presentation.Controllers
         public IActionResult Create(CreateVehicleDTO model)
         {
             _vehicleRepo.Add(model);
-            return View();
+            return RedirectToAction("List", "Vehicle");
         }
 
         [Authorize]
