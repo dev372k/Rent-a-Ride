@@ -43,8 +43,8 @@ namespace Business.Implementations
         {
             var bookings = _context.Bookings.Include(_ => _.Vehicle).AsQueryable();
 
-            //bookings.Select(_ => (double)_.Vehicle.Price * _.To.Subtract(_.From).TotalDays).Sum()
-            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), 0);
+            var revenue = bookings.Select(_ => (double)_.Vehicle.Price * _.To.Subtract(_.From).TotalDays).AsEnumerable().Sum();
+            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), revenue);
         }
 
         public void Delete(int id)

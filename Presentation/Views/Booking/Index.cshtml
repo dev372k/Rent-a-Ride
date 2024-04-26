@@ -101,7 +101,6 @@
     }
 
     <script>
-        // Wait for the DOM to load
         document.addEventListener("DOMContentLoaded", function () {
             var notAvailableFrom = new Date("@vehicle.NotAvailableFrom").toISOString().slice(0, 16);
             var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
@@ -112,7 +111,6 @@
         });
 
         const disableDate = () => {
-            debugger
             var now = new Date().toISOString().slice(0, 16);
             var notAvailableTo = new Date($("#From").val()).toISOString().slice(0, 16);
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
