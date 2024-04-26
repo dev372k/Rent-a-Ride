@@ -12,6 +12,7 @@ using Data.Helpers;
 using Newtonsoft.Json;
 using Presentation.Models;
 using X.PagedList;
+using Data.Entities;
 
 namespace Presentation.Controllers
 {
@@ -34,7 +35,20 @@ namespace Presentation.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var user = _stateHelper.GetUserData();
+
+            if (user.Role == enRole.Admin)
+            {
+                (int, int) userCount = _userRepo.Count();
+                return View(new DashboardModel
+                {
+                    ActiveUsers = userCount.Item1,
+                    DisableUsers = userCount.Item2,
+                    TotalsUsers = userCount.Item1 + userCount.Item2,
+                });
+
+            }
+            return View(new DashboardModel());
         }
 
         public IActionResult Settings()
@@ -128,7 +142,7 @@ namespace Presentation.Controllers
             }
             else if(user.IsDeleted)
             {
-                _notyf.Error("User is locked. PLease contact Administrator");
+                _notyf.Error("User is locked. Please contact Administrator");
                 return View();
             }
             else if (!SecurityHelper.ValidateHash(model.Password, user.Password))

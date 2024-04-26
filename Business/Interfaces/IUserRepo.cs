@@ -16,5 +16,7 @@ namespace Business.Implementations
         void Update(UpdateUserDTO dto);
         IQueryable<GetUserDTO> Get();
         void UpdateStatus(int userId, bool status);
+
+        (int, int) Count();
     }
 }

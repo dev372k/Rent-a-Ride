@@ -45,7 +45,8 @@ namespace Business.Implementations
                 Role = _.Role,
                 City = _.City,
                 Country = _.Country,
-                Address = _.Address
+                Address = _.Address,
+                IsDeleted = _.IsDeleted
             }).FirstOrDefault();
             return user;
         }
@@ -91,6 +92,12 @@ namespace Business.Implementations
                 user.IsDeleted = status;
                 _context.SaveChanges();
             }
+        }
+
+        public (int, int) Count()
+        {
+            var users = _context.Users;
+            return (users.Where(_ => !_.IsDeleted).Count(), users.Where(_ => _.IsDeleted).Count());
         }
     }
 }

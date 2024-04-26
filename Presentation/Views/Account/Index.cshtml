@@ -1,4 +1,13 @@
-﻿@{
+﻿@model DashboardModel
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
 }
+
+
+
+<div>
+    @Model.ActiveUsers
+    @Model.DisableUsers
+    @Model.TotalsUsers
+</div>
