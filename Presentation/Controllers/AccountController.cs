@@ -43,7 +43,7 @@ namespace Presentation.Controllers
             if (user.Role == enRole.Admin)
             {
                 (int, int) userCount = _userRepo.Count();
-                (int, int, double) bookingCount = _bookingRepo.Count();
+                (int, int, string) bookingCount = _bookingRepo.Count();
                 return View(new DashboardModel
                 {
                     ActiveUsers = userCount.Item1,
@@ -54,7 +54,17 @@ namespace Presentation.Controllers
                     TotalRevenue = bookingCount.Item3,
                 });
             }
-            return View(new DashboardModel());
+            else
+            {
+                var  role = _stateHelper.GetUserData();
+                (int, int, double) bookingCount = _bookingRepo.UserBookingCount(role.Id);
+                return View(new DashboardModel
+                {
+                    TotalBookings = bookingCount.Item1,
+                    ActiveBookings = bookingCount.Item2,
+                    TotalReviewed = bookingCount.Item3,
+                });
+            }
         }
 
         public IActionResult Settings()
@@ -195,9 +205,9 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult UpdateStatus(int userId, string status)
         {
-            bool _status = false;
+            bool _status = true;
             if (status == "on")
-                _status = true;
+                _status = false;
             _userRepo.UpdateStatus(userId, _status);
             return RedirectToAction("Users", "Account");
         }

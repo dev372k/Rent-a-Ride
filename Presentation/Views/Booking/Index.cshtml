@@ -112,7 +112,10 @@
 
         const disableDate = () => {
             var now = new Date().toISOString().slice(0, 16);
-            var notAvailableTo = new Date($("#From").val()).toISOString().slice(0, 16);
+            var notAvailableToDate = new Date($("#From").val());
+            notAvailableToDate.setDate(notAvailableToDate.getDate() + 1);
+            var notAvailableTo = notAvailableToDate.toISOString().slice(0, 16);
+            console.log("Test", now, notAvailableTo)
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
         }
     </script>

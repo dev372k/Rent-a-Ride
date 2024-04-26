@@ -46,16 +46,16 @@
                 </td>
                 <td>
                     <div class="form-check form-switch">
-                        <form action="@Url.Action("UpdateStatus","Account")" method="post" id="form">
+                        <form action="@Url.Action("UpdateStatus","Account")" method="post" id="form_@item.Id">
                             <input name="userId" value="@item.Id" hidden />
                             @{
                                 if (item.IsDeleted)
                                 {
-                                    <input name="status" class="form-check-input" type="checkbox" role="switch" onchange="$('#form').submit()">
+                                    <input name="status" class="form-check-input" type="checkbox" role="switch" onchange="$('#form_@item.Id').submit()">
                                 }
                                 else
                                 {
-                                    <input name="status" class="form-check-input" type="checkbox" role="switch" checked onchange="$('#form').submit()">
+                                    <input name="status" class="form-check-input" type="checkbox" role="switch" checked onchange="$('#form_@item.Id').submit()">
                                 }
                             }
                         </form>
