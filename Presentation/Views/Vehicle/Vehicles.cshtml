@@ -11,7 +11,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-12">
             <div class="card" style="width: 18rem;">
                 <div class="card-header">
                     Filter
@@ -41,14 +41,14 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 col-sm-12">
             <div class="row">
                 @{
                     if (Model.Count() > 0)
                     {
                         foreach (var item in Model)
                         {
-                            <div class="col-md-4 my-2">
+                            <div class="col-md-4 col-sm-6 my-2">
                                 <div class="card" style="width: 18rem;">
                                     <img src="@item.Image" class="card-img-top" alt="..." style="width: 100%; height: 250px; object-fit: contain">
                                     <div class="card-body">

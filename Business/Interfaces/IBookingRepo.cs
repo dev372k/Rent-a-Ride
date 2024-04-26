@@ -9,5 +9,6 @@ namespace Business.Interfaces
         IQueryable<GetBookingDTO> Get(int userId);
         void Update(int id, enPaymentStatus status, string paymentIntent);
         void Delete(int id);
+        (int, int, double) Count();
     }
 }

@@ -20,18 +20,21 @@ namespace Presentation.Controllers
     {
         private IUserRepo _userRepo;
         private IReviewRepo _reviewRepo;
+        private IBookingRepo _bookingRepo;
         private StateHelper _stateHelper;
         private readonly INotyfService _notyf;
 
         public AccountController(IUserRepo userRepo,
              INotyfService notyf,
              StateHelper stateHelper,
-             IReviewRepo reviewRepo)
+             IReviewRepo reviewRepo,
+             IBookingRepo bookingRepo)
         {
             _userRepo = userRepo;
             _notyf = notyf;
             _stateHelper = stateHelper;
             _reviewRepo = reviewRepo;
+            _bookingRepo = bookingRepo;
         }
         public IActionResult Index()
         {
@@ -40,13 +43,16 @@ namespace Presentation.Controllers
             if (user.Role == enRole.Admin)
             {
                 (int, int) userCount = _userRepo.Count();
+                (int, int, double) bookingCount = _bookingRepo.Count();
                 return View(new DashboardModel
                 {
                     ActiveUsers = userCount.Item1,
                     DisableUsers = userCount.Item2,
                     TotalsUsers = userCount.Item1 + userCount.Item2,
+                    TotalBookings = bookingCount.Item1,
+                    ActiveBookings = bookingCount.Item2,
+                    TotalRevenue = bookingCount.Item3,
                 });
-
             }
             return View(new DashboardModel());
         }

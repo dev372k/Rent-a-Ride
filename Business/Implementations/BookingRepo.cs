@@ -39,6 +39,14 @@ namespace Business.Implementations
             };
         }
 
+        public (int, int, double) Count()
+        {
+            var bookings = _context.Bookings.Include(_ => _.Vehicle).AsQueryable();
+
+            //bookings.Select(_ => (double)_.Vehicle.Price * _.To.Subtract(_.From).TotalDays).Sum()
+            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), 0);
+        }
+
         public void Delete(int id)
         {
             var booking = _context.Bookings.FirstOrDefault(_ => _.Id == id);
