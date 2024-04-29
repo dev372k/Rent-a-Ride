@@ -45,10 +45,10 @@ namespace Data.Commons
     public enum enRentReason
     {
         Vacation,
-        BusinessTrip,
-        PersonalUse,
-        ReplacementVehicle,
-        SpecialOccasion,
+        Business_Trip,
+        Personal_Use,
+        Replacement_Vehicle,
+        Special_Occasion,
         Other
     }
 }
