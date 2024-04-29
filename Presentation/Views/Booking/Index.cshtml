@@ -101,20 +101,21 @@
     }
 
     <script>
-        // Wait for the DOM to load
         document.addEventListener("DOMContentLoaded", function () {
             var notAvailableFrom = new Date("@vehicle.NotAvailableFrom").toISOString().slice(0, 16);
             var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
             var now = new Date().toISOString().slice(0, 16);
 
-            document.getElementById("From").min = notAvailableTo > now ? notAvailableTo : now;
+            document.getElementById("From").min = notAvailableFrom > now ? notAvailableFrom : now;
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
         });
 
         const disableDate = () => {
-            debugger
             var now = new Date().toISOString().slice(0, 16);
-            var notAvailableTo = new Date($("#From").val()).toISOString().slice(0, 16);
+            var notAvailableToDate = new Date($("#From").val());
+            notAvailableToDate.setDate(notAvailableToDate.getDate() + 1);
+            var notAvailableTo = notAvailableToDate.toISOString().slice(0, 16);
+            console.log("Test", now, notAvailableTo)
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
         }
     </script>

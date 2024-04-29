@@ -7,6 +7,7 @@
         public int TotalsUsers { get; set; }
         public int TotalBookings { get; set; }
         public int ActiveBookings { get; set; }
-        public double TotalRevenue { get; set; }
+        public string TotalRevenue { get; set; }
+        public double TotalReviewed { get; set; }
     }
 }

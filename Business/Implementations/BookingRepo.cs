@@ -3,6 +3,7 @@ using Business.Interfaces;
 using Data;
 using Data.Commons;
 using Data.Entities;
+using Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Implementations
@@ -39,12 +40,19 @@ namespace Business.Implementations
             };
         }
 
-        public (int, int, double) Count()
+        public (int, int, string) Count()
         {
             var bookings = _context.Bookings.Include(_ => _.Vehicle).AsQueryable();
 
             var revenue = bookings.Select(_ => (double)_.Vehicle.Price * _.To.Subtract(_.From).TotalDays).AsEnumerable().Sum();
-            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), revenue);
+            var rev = revenue.FormatNumber();
+            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), rev);
+        }
+        public (int, int, double) UserBookingCount(int userId)
+        {
+            var bookings = _context.Bookings.Include(_ => _.Vehicle).Include(_ => _.Review).Where(_ => _.UserId == userId).AsQueryable();
+            var reviewed = bookings.Where(_ => _.Review != null).Count();
+            return (bookings.Count(), bookings.Where(_ => _.To > DateTime.Now).Count(), reviewed);
         }
 
         public void Delete(int id)
