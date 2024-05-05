@@ -17,6 +17,7 @@ namespace Data
         public DbSet<Transaction> Transactions => Set<Transaction>();
         public DbSet<Booking> Bookings => Set<Booking>();
         public DbSet<Vehicle> Vehicles => Set<Vehicle>();
+        public DbSet<VehicleImage> VehicleImages => Set<VehicleImage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

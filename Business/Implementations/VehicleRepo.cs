@@ -29,6 +29,7 @@ namespace Business.Implementations
             try
             {
                 var fileItemResponse = await _fileService.UploadFile(createVehicleDTO.FileImage);
+                var multiFiles = await _fileService.UploadFiles(createVehicleDTO.VehicleImages);
 
                 var vehicle = new Vehicle
                 {
@@ -42,8 +43,18 @@ namespace Business.Implementations
                     Location = createVehicleDTO.Location,
                     Price = createVehicleDTO.Price,
                 };
-
+                var VehicleImages = new List<VehicleImage>();
+                foreach (var image in multiFiles.ListFileResponse)
+                {
+                    var vehicleImage = new VehicleImage
+                    {
+                        Vehicle = vehicle,
+                        ImageName = image.FileName,
+                    };
+                    VehicleImages.Add(vehicleImage);
+                }
                 _context.Vehicles.AddAsync(vehicle).GetAwaiter().GetResult();
+                _context.VehicleImages.AddRangeAsync(VehicleImages).GetAwaiter().GetResult();
                 _context.SaveChangesAsync().GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -78,7 +89,8 @@ namespace Business.Implementations
         public GetVehicleDTO Get(int id)
         {
             var bookings = _context.Bookings.Where(_ => _.VehicleId == id);
-            GetVehicleDTO? vehicle = _context.Vehicles.Include(_ => _.Bookings)
+            var vehicleImages = _context.VehicleImages.Where(_ => _.VehicleId == id);
+            GetVehicleDTO? vehicle = _context.Vehicles.Include(_ => _.Bookings).Include(_ => _.VehicleImages)
                 .Where(_ => _.Id == id && !_.IsDeleted).Select(_ => new GetVehicleDTO
                 {
                     Id = _.Id,
@@ -92,9 +104,20 @@ namespace Business.Implementations
                     Type = _.Type,
                     //Image = _.Image,
                     Image = _fileService.FileURL(_.Image),
+                    //VehicleImages = _.VehicleImages.Select(_ => _.ImageName).ToList(),
                     NotAvailableFrom = bookings.Select(_ => _.From).OrderBy(_ => _).FirstOrDefault(),
                     NotAvailableTo = bookings.Select(_ => _.To).OrderByDescending(_ => _).FirstOrDefault(),
                 }).FirstOrDefault();
+            if (vehicleImages.Any())
+            {
+                List<string> images = new List<string>();
+                foreach (var vehicleImage in vehicleImages)
+                {
+                    var image = _fileService.FileURL(vehicleImage.ImageName);
+                    images.Add(image);
+                }
+                vehicle.VehicleImages = images;
+            }
             return vehicle;
         }
         public void Delete(int id)

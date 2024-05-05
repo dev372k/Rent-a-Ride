@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs
 {
-    public class FileResponseDTO
+    public class FilesResponseDTO
+    {
+        public FilesResponseDTO()
+        {
+            ListFileResponse = new List<FileItemResponseDTO>();
+        }
+        public List<FileItemResponseDTO> ListFileResponse { get; set; }
+    }
+    public class FileItemResponseDTO
     {
         public string FileName { get; set; }
         public string FilePath { get; set; }

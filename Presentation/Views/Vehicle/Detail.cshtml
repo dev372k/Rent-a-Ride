@@ -16,6 +16,15 @@
             <p><strong>Description:</strong> @Model.Description</p>
             <a href="@Url.Action("index","Booking")?vehicleId=@Model.Id" class="btn btn-outline-success">Book it!</a>
         </div>
+        @if (Model.VehicleImages != null)
+        {
+            foreach (var item in Model.VehicleImages)
+            {
+                <div class="col-md-3">
+                    <img src="@item" class="img-fluid" alt="Vehicle Images" style="width: 100%; height: 250px; object-fit: contain">
+                </div>
+            }
+        }
     </div>
     <h4>Note</h4>
     <ul>

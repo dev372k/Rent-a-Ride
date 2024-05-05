@@ -54,7 +54,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">@item.Model - @item.Name - @item.Year</h5>
                                         <p class="card-text"><strong>&pound;@item.Price/Day</strong></p>
-                                        <p class="card-text">@item.Description?.Substring(0, 100) ...</p>
+                                        <p class="card-text">@item.Description?.Substring(0, 10) ...</p>
                                         <a href="@Url.Action("Detail", "Vehicle")/@item.Id">Details</a>
                                     </div>
                                 </div>
