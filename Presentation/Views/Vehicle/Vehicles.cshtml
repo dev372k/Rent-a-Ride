@@ -6,6 +6,7 @@
     int.TryParse(Context.Request.Query["vehicleType"], out int vehicleType);
     int price = 5000;
     int.TryParse(Context.Request.Query["price"], out price);
+    price = price != 0 ? price : 5000;
     string location = Context.Request.Query["location"];
 }
 
@@ -32,9 +33,9 @@
                             <label>Price</label>
                             <br />
                             <div class="text-center">
-                                <input id="price" name="price" type="range" min="0" step="50" max="5000" onchange="$('#filterForm').submit()" value="@price" />
+                                <input id="price" name="price" type="range" min="100" step="50" max="5000" onchange="$('#filterForm').submit()" value="@price" />
                                 <br />
-                                <span id="priceRange">5000</span>
+                                <span id="priceRange">@price</span>
                             </div>
                         </li>
                     </ul>
@@ -54,7 +55,13 @@
                                     <div class="card-body">
                                         <h5 class="card-title">@item.Model - @item.Name - @item.Year</h5>
                                         <p class="card-text"><strong>&pound;@item.Price/Day</strong></p>
-                                        <p class="card-text">@item.Description?.Substring(0, 100) ...</p>
+                                        <p class="card-text">
+                                            @if (item.Description != null)
+                                            {
+                                                string first100Chars = item.Description.Length > 100 ? item.Description.Substring(0, 100) : item.Description;
+                                                @first100Chars <span>....</span>
+                                            }
+                                        </p>
                                         <a href="@Url.Action("Detail", "Vehicle")/@item.Id">Details</a>
                                     </div>
                                 </div>
