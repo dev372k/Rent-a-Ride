@@ -38,11 +38,9 @@ namespace Business.Implementations
 
             string[] arrFile = file.FileName.Split(".");
 
-            // Generate guid
-            Guid obj = Guid.NewGuid();
-            string guid = obj.ToString();
+            string guid = Guid.NewGuid().ToString();
             // Append guid in filename before extension
-            string fileName = arrFile[0] + "_" + guid + "." + arrFile[1];
+            string fileName = /*arrFile[0] + "_" +*/ guid + "." + arrFile[1];
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", fileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))

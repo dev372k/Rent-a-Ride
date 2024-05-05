@@ -31,8 +31,8 @@ namespace Presentation.Controllers
         {
             return View(_vehicleRepo.Get(id));
         }
-        
-        [HttpGet("Vehicle/List"),Authorize]
+
+        [HttpGet("Vehicle/List"), Authorize]
         public IActionResult List(int vehicleType = 0, string location = "", decimal price = 0, int pageNumber = 1)
         {
             return View(_vehicleRepo.Get(vehicleType, location, price).ToPagedList(pageNumber, CustomConstants.PageSize));
@@ -45,9 +45,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPost, Authorize]
-        public IActionResult Create(CreateVehicleDTO model)
+        public async Task<IActionResult> Create(CreateVehicleDTO model)
         {
-            _vehicleRepo.Add(model);
+            await _vehicleRepo.Add(model);
             return RedirectToAction("List", "Vehicle");
         }
 

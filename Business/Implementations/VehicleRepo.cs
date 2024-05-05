@@ -26,22 +26,31 @@ namespace Business.Implementations
 
         public async Task Add(CreateVehicleDTO createVehicleDTO)
         {
-            var fileItemResponse = await _fileService.UploadFile(createVehicleDTO.FileImage);
-
-            var vehicle = new Vehicle
+            try
             {
-                Name = createVehicleDTO.Name,
-                Description = createVehicleDTO.Description,
-                Image = fileItemResponse.FileName,
-                Type = (enVehicleType)createVehicleDTO.Type,
-                Model = createVehicleDTO.VehicleModel,
-                Year = createVehicleDTO.Year,
-                Color = createVehicleDTO.Color,
-                Location = createVehicleDTO.Location,
-                Price = createVehicleDTO.Price,
-            };
-            _context.Vehicles.Add(vehicle);
-            _context.SaveChanges();
+                var fileItemResponse = await _fileService.UploadFile(createVehicleDTO.FileImage);
+
+                var vehicle = new Vehicle
+                {
+                    Name = createVehicleDTO.Name,
+                    Description = createVehicleDTO.Description,
+                    Image = fileItemResponse.FileName,
+                    Type = (enVehicleType)createVehicleDTO.Type,
+                    Model = createVehicleDTO.VehicleModel,
+                    Year = createVehicleDTO.Year,
+                    Color = createVehicleDTO.Color,
+                    Location = createVehicleDTO.Location,
+                    Price = createVehicleDTO.Price,
+                };
+
+                _context.Vehicles.AddAsync(vehicle).GetAwaiter().GetResult();
+                _context.SaveChangesAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         public IQueryable<GetVehicleDTO> Get(int vehicleType, string location, decimal price)
         {

@@ -81,7 +81,7 @@
                         @foreach (var value in Enum.GetValues(typeof(enRentReason)))
                         {
                             var name = Enum.GetName(typeof(enRentReason), value);
-                            <option value="@value">@value</option>
+                            <option value="@value.ToString().Replace("_", " ")">@value.ToString().Replace("_", " ")</option>
                         }
                     </select>
                     @* <textarea asp-for="Purpose" class="form-control"></textarea> *@

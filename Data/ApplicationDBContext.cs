@@ -6,6 +6,10 @@ namespace Data
 {
     public class ApplicationDBContext : DbContext
     {
+        public ApplicationDBContext()
+        {
+        }
+
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> opt) : base(opt) { }
 
         public DbSet<User> Users => Set<User>();
