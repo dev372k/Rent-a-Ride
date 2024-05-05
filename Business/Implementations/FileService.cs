@@ -22,10 +22,10 @@ namespace Business.Implementations
             this.configuration = configuration;
         }
 
-        public async Task<FileResponseDTO> UploadFile(IFormFile file)
+        public async Task<FileItemResponseDTO> UploadFile(IFormFile file)
         {
 
-            FileResponseDTO fileResponse = new FileResponseDTO();
+            FileItemResponseDTO fileResponse = new FileItemResponseDTO();
 
             if (file.FileName.Length > 100)
             {
@@ -49,6 +49,45 @@ namespace Business.Implementations
             }
             fileResponse.FileName = fileName;
             fileResponse.FilePath = FileURL(fileName);
+
+            return fileResponse;
+        }
+
+        public async Task<FilesResponseDTO> UploadFiles(List<IFormFile> ListFiles)
+        {
+
+            FilesResponseDTO fileResponse = new FilesResponseDTO();
+
+            foreach (var file in ListFiles)
+            {
+                if (file.FileName.Length > 100)
+                {
+                    throw new Exception("Length Exceeds");
+                }
+
+                if (file.Length > 52428800)
+                {
+                    throw new Exception("File Size Exceed");
+                }
+
+                string[] arrFile = file.FileName.Split(".");
+
+
+                // Generate guid
+                string guid = Guid.NewGuid().ToString();
+                // Append guid in filename before extension
+                string fileName = /*arrFile[0] + "_" +*/ guid + "." + arrFile[1];
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                FileItemResponseDTO fileItemResponse = new FileItemResponseDTO();
+                fileItemResponse.FileName = fileName;
+                fileItemResponse.FilePath = FileURL(fileName);
+                fileResponse.ListFileResponse.Add(fileItemResponse);
+            }
 
             return fileResponse;
         }

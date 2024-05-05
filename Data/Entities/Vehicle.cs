@@ -19,5 +19,6 @@ namespace Data.Entities
         public string Location { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+        public ICollection<VehicleImage> VehicleImages { get; set; }
     }
 }
