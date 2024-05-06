@@ -102,11 +102,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var notAvailableFrom = new Date("@vehicle.NotAvailableFrom").toISOString().slice(0, 16);
-            var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
+            var vehicleData = @Html.Raw(Json.Serialize(vehicle));
+            // var notAvailableFrom = new Date("@vehicle.NotAvailableFrom").toISOString().slice(0, 16);
+            // var notAvailableTo = new Date("@vehicle.NotAvailableTo").toISOString().slice(0, 16);
+            var notAvailableFrom = new Date(vehicleData.notAvailableFrom).toISOString().slice(0, 16);
+            var notAvailableTo = new Date(vehicleData.notAvailableTo).toISOString().slice(0, 16);
             var now = new Date().toISOString().slice(0, 16);
-
+            //We need to disale date from and To both on the base of Dates coming.
             document.getElementById("From").min = notAvailableFrom > now ? notAvailableFrom : now;
+            document.getElementById("From").min = notAvailableTo > now ? notAvailableTo : now;
+            document.getElementById("To").min = notAvailableFrom > now ? notAvailableFrom : now;
             document.getElementById("To").min = notAvailableTo > now ? notAvailableTo : now;
         });
 

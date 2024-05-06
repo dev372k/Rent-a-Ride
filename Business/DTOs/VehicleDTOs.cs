@@ -15,6 +15,7 @@ namespace Business.DTOs
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
+        public List<string> VehicleImages { get; set; }
         public enVehicleType Type { get; set; }
         public string Model { get; set; } = string.Empty;
         public string Year { get; set; } = string.Empty;
@@ -30,6 +31,7 @@ namespace Business.DTOs
         public int Id { get; set; } 
         public string Name { get; set; }
         public IFormFile FileImage { get; set; }
+        public List<IFormFile> VehicleImages { get; set; }
         //public HttpPostedFileBase FileImage { get; set; }
         public string Description { get; set; }
         public enVehicleType Type { get; set; }
